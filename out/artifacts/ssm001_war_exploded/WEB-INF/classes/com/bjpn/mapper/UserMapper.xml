@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpn.mapper.UserMapper">
+    <!--User loginUser(@Param("userCode")String UserCode,@Param("userPwd")String userPwd);-->
+    <select id="loginUser" resultType="com.bjpn.bean.User">
+        select * from userinfo where usercode=#{userCode} and userPwd=#{userPwd}
+    </select>
+    <!--int addEmployee(Emp emp);-->
+    <insert id="addEmployee">
+        insert into emp(emp_name,emp_job,emp_photo,emp_hiredate,emp_sal,dept_no)
+        values(#{name},#{job},#{photo},#{hiredate},#{salary},#{deptno})
+    </insert>
+    <!-- List<Emp> selectEmp();-->
+    <select id="selectEmp" resultType="com.bjpn.bean.Emp">
+        select emp_no id,emp_name name, emp_job job,emp_photo photo,emp_hiredate emp_hiredate, emp_sal salary, dept_no deptno from emp
+    </select>
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bjpn.mapper.EmpMapper" >
+  <resultMap id="BaseResultMap" type="com.bjpn.bean.Emp" >
+    <id column="emp_no" property="empNo" jdbcType="INTEGER" />
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="emp_job" property="empJob" jdbcType="VARCHAR" />
+    <result column="emp_photo" property="empPhoto" jdbcType="VARCHAR" />
+    <result column="emp_hiredate" property="empHiredate" jdbcType="VARCHAR" />
+    <result column="emp_sal" property="empSal" jdbcType="VARCHAR" />
+    <result column="dept_no" property="deptNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    emp_no, emp_name, emp_job, emp_photo, emp_hiredate, emp_sal, dept_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   select   e.emp_no, e.emp_name, e.emp_job, e.emp_photo, e.emp_hiredate, e.emp_sal, e.dept_no,
+          d.dept_name,d.dept_loc
+    from  emp e
+    left join dept d
+    on e.dept_no = d.dept_no
+    where emp_no = #{empNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from emp
+    where emp_no = #{empNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bjpn.bean.Emp" >
+    insert into emp (emp_no, emp_name, emp_job, 
+      emp_photo, emp_hiredate, emp_sal, 
+      dept_no)
+    values (#{empNo,jdbcType=INTEGER}, #{empName,jdbcType=VARCHAR}, #{empJob,jdbcType=VARCHAR}, 
+      #{empPhoto,jdbcType=VARCHAR}, #{empHiredate,jdbcType=VARCHAR}, #{empSal,jdbcType=VARCHAR}, 
+      #{deptNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bjpn.bean.Emp" >
+    insert into emp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empNo != null" >
+        emp_no,
+      </if>
+      <if test="empName != null" >
+        emp_name,
+      </if>
+      <if test="empJob != null" >
+        emp_job,
+      </if>
+      <if test="empPhoto != null" >
+        emp_photo,
+      </if>
+      <if test="empHiredate != null" >
+        emp_hiredate,
+      </if>
+      <if test="empSal != null" >
+        emp_sal,
+      </if>
+      <if test="deptNo != null" >
+        dept_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empNo != null" >
+        #{empNo,jdbcType=INTEGER},
+      </if>
+      <if test="empName != null" >
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empJob != null" >
+        #{empJob,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhoto != null" >
+        #{empPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="empHiredate != null" >
+        #{empHiredate,jdbcType=VARCHAR},
+      </if>
+      <if test="empSal != null" >
+        #{empSal,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        #{deptNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bjpn.bean.Emp" >
+    update emp
+    <set >
+      <if test="empName != null" >
+        emp_name = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empJob != null" >
+        emp_job = #{empJob,jdbcType=VARCHAR},
+      </if>
+      <if test="empPhoto != null" >
+        emp_photo = #{empPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="empHiredate != null" >
+        emp_hiredate = #{empHiredate,jdbcType=VARCHAR},
+      </if>
+      <if test="empSal != null" >
+        emp_sal = #{empSal,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        dept_no = #{deptNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where emp_no = #{empNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bjpn.bean.Emp" >
+    update emp
+    set emp_name = #{empName,jdbcType=VARCHAR},
+      emp_job = #{empJob,jdbcType=VARCHAR},
+      emp_photo = #{empPhoto,jdbcType=VARCHAR},
+      emp_hiredate = #{empHiredate,jdbcType=VARCHAR},
+      emp_sal = #{empSal,jdbcType=VARCHAR},
+      dept_no = #{deptNo,jdbcType=VARCHAR}
+    where emp_no = #{empNo,jdbcType=INTEGER}
+  </update>
+  <!--List<Emp> getAllEmp();-->
+  <resultMap id="BaseResultMap1" type="com.bjpn.bean.Emp" >
+    <id column="emp_no" property="empNo" jdbcType="INTEGER" />
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="emp_job" property="empJob" jdbcType="VARCHAR" />
+    <result column="emp_photo" property="empPhoto" jdbcType="VARCHAR" />
+    <result column="emp_hiredate" property="empHiredate" jdbcType="VARCHAR" />
+    <result column="emp_sal" property="empSal" jdbcType="DOUBLE" />
+    <result column="dept_no" property="deptNo" jdbcType="INTEGER" />
+    <result column="dept_name" property="dname" jdbcType="VARCHAR"/>
+  </resultMap>
+  <select id="getAllEmp" resultMap="BaseResultMap1">
+    select   e.emp_no, e.emp_name, e.emp_job, e.emp_photo, e.emp_hiredate, e.emp_sal, e.dept_no,
+          d.dept_name,d.dept_loc
+    from  emp e
+    left join dept d
+    on e.dept_no = d.dept_no
+    where emp_name like '%' #{likeName} '%'
+    limit #{startIndex},#{pageSize}
+  </select>
+  <!--//总记录数查询
+    int  getCount();-->
+  <select id="getCount" resultType="java.lang.Integer">
+    select   count(*)
+    from  emp e
+    left join dept d
+    on e.dept_no = d.dept_no
+    where emp_name like "%" #{likeName} "%"
+  </select>
+
+
+</mapper>
